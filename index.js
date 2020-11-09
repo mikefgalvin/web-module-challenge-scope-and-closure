@@ -105,8 +105,8 @@ function finalScore(inningCB, getInnings){
     // const currentScore = (inningCB)
       homeScore = homeScore + inningCB()
       awayScore = awayScore + inningCB()
-      console.log('home', homeScore);
-      console.log('away', awayScore);
+      // console.log('home', homeScore);
+      // console.log('away', awayScore);
     }
 
 
@@ -116,7 +116,7 @@ function finalScore(inningCB, getInnings){
     }
 }
 
-console.log('task 3', finalScore(inning, 9));
+// console.log('task 3', finalScore(inning, 9));
 // console.log('task 3', finalScore(inning, 9));
 // console.log('task 3', finalScore(inning, 9));
 // console.log('task 3', finalScore(inning, 9));
@@ -184,15 +184,19 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(inningCB, getInnings) {
+function scoreboard(getInningScore, inningCB, getInnings) {
   const boxScore = [];
+  
   let homeScore = 0;
   let awayScore = 0;
 
   for(let i = 0; i < getInnings; i++){
-      homeScore = homeScore + inningCB();
-      awayScore = awayScore + inningCB();
-      boxScore.push(`Inning ${i + 1}: Away ${awayScore} - Home ${homeScore}`)
+      // homeScore = homeScore + inningCB();
+      // awayScore = awayScore + inningCB();
+      const currentScore = getInningScore(inningCB);
+      homeScore = homeScore + currentScore.Home;
+      awayScore = awayScore + currentScore.Away;
+      boxScore.push(`Inning ${i + 1}: Away ${currentScore.Away} - Home ${currentScore.Home}`)
   }
   
   if( homeScore === awayScore){
@@ -205,7 +209,7 @@ function scoreboard(inningCB, getInnings) {
 
 }
 
-console.log('Task 5', scoreboard(inning, 9));
+console.log('Task 5', scoreboard(getInningScore, inning, 9));
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
