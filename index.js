@@ -16,7 +16,7 @@
 function processFirstItem(stringList, callback) {
   return callback(stringList[0])
 }
-console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
+console.log('Example Task', processFirstItem(['foo','bar'],function(str){return str+str}));
 
 // ⭐️ Example Challenge END ⭐️
 
@@ -29,10 +29,14 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   
   1. What is the difference between counter1 and counter2?
   
+      - Counter2 adds a count to a global variable while Counter1 adds a count to a variable that is block scoped.
+
   2. Which of the two uses a closure? How can you tell?
+      - Counter1 is using a closure because a function is being accessed from a parent scope in a child level scope even after the count++ has been terminated.
   
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+     - counter1 seems to be better for updating a the variable will multiple calls, while counter2 is better if you only want to be able to access the variable count from multiple functions. 
 */
 
 // counter1 code
@@ -45,12 +49,20 @@ function counterMaker() {
 
 const counter1 = counterMaker();
 
+// console.log(counter1());
+// console.log(counter1());
+// console.log(counter1());
+
 // counter2 code
 let count = 0;
 
 function counter2() {
   return count++;
 }
+
+// console.log(counter2());
+// console.log(counter2());
+// console.log(counter2());
 
 
 /* Task 2: inning() 
@@ -61,11 +73,15 @@ Use the inning function below to do the following:
   For example: invoking inning() should return a numerical score value of 0, 1, or 2
 */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning(){
+  return Math.round(Math.random() * 2);
 }
+
+  // console.log(inning());
+  // console.log(inning());
+  // console.log(inning());
+  // console.log(inning());
+  // console.log(inning());
 
 /* Task 3: finalScore()
 Use the finalScore function below to do the following:
@@ -80,20 +96,51 @@ For example: invoking finalScore(inning, 9) might return this object:
 }
 */ 
 
-function finalScore(/*code Here*/){
+function finalScore(inningCB, getInnings){
+  
+  let homeScore = 0;
+  let awayScore = 0;
 
-  /*Code Here*/
+  for(let i = 0; i < getInnings; i++){
+    // const currentScore = (inningCB)
+      homeScore = homeScore + inningCB()
+      awayScore = awayScore + inningCB()
+      console.log('home', homeScore);
+      console.log('away', awayScore);
+    }
 
+
+    return {
+      Home: homeScore,
+      Away: awayScore
+    }
 }
+
+console.log('task 3', finalScore(inning, 9));
+// console.log('task 3', finalScore(inning, 9));
+// console.log('task 3', finalScore(inning, 9));
+// console.log('task 3', finalScore(inning, 9));
+// console.log('task 3', finalScore(inning, 9));
+
 
 /* Task 4: 
 // create a function called getInningScore 
 // the function should take the inning function as an argument 
 // it should return an object with with a score for home and a score for away that that populates from invoking the inning callback. */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(inningCB) {
+  return {
+    Home: inningCB(),
+    Away: inningCB()
+  }
 }
+
+// console.log('Task 4', getInningScore(inning));
+
+
+
+
+
 /* Task 5: scoreboard()
 Use the scoreboard function below to do the following:
   1. Receive a callback function, that you create, called `getInningScore`
@@ -137,12 +184,28 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
+function scoreboard(inningCB, getInnings) {
+  const boxScore = [];
+  let homeScore = 0;
+  let awayScore = 0;
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+  for(let i = 0; i < getInnings; i++){
+      homeScore = homeScore + inningCB();
+      awayScore = awayScore + inningCB();
+      boxScore.push(`Inning ${i + 1}: Away ${awayScore} - Home ${homeScore}`)
+  }
+  
+  if( homeScore === awayScore){
+    boxScore.push(`This game will require extra innings: Away ${awayScore} - Home ${homeScore}`)
+    return boxScore;
+  }
+  else 
+    boxScore.push(`Final Score: Away ${awayScore} - Home ${homeScore}`)
+    return boxScore;
+
 }
 
-
+console.log('Task 5', scoreboard(inning, 9));
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
